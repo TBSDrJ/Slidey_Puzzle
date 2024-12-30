@@ -1,3 +1,6 @@
+# Just for debugging
+total_moves = 0
+
 class GamePiece:
     def __init__(self, number: int, width: int, length: int, 
                 x: int, y: int, color: str) -> None:
@@ -9,7 +12,7 @@ class GamePiece:
         self.length = length
         # Upper-Left corner: x in 0 -> 3, y in 0 -> 4.
         self.location = [x, y]
-        # Color: 'r' = Red, 'p' = Purple, 'g' = Green
+        # Color: 'r' = Red, 'p' = Purple, 'g' = Green, 'h' = Horizontal Purple
         self.color = color
 
     def __str__(self) -> str:
@@ -20,6 +23,8 @@ class GamePiece:
                 color = "Purple"
             case 'g':
                 color = "Green"
+            case 'h':
+                color = "Horizontal Purple"
         return f"{color} Piece covering {self.spaces_occupied}"
 
     def __repr__(self) -> str:
@@ -71,13 +76,11 @@ class GamePiece:
 
     def move(self, direction: list[int], gb: "GameBoard") -> None:
         """Move this piece in given direction, with validity checking."""
-        print(self.location)
         assert(direction in [[1,0], [0,1], [-1,0], [0,-1]])
         self.location[0] += direction[0]
         assert(self.location[0] in range(gb.width))
         self.location[1] += direction[1]
         assert(self.location[1] in range(gb.length))
-        print(self.location)
 
 class GameBoard:
     def __init__(self):
@@ -88,9 +91,9 @@ class GameBoard:
         self.board = [[0] * self.width for i in range(self.length)]
         self.p1 = GamePiece(1, 1, 2, 0, 1, 'p')
         self.p2 = GamePiece(2, 1, 2, 0, 3, 'p')
-        self.p3 = GamePiece(3, 2, 1, 1, 2, 'p')
-        self.p4 = GamePiece(4, 1, 2, 3, 1, 'p')
-        self.p5 = GamePiece(5, 1, 2, 3, 3, 'p')
+        self.p3 = GamePiece(3, 1, 2, 3, 1, 'p')
+        self.p4 = GamePiece(4, 1, 2, 3, 3, 'p')
+        self.h1 = GamePiece(1, 2, 1, 1, 2, 'h')
         self.r1 = GamePiece(1, 1, 1, 1, 3, 'r')
         self.r2 = GamePiece(2, 1, 1, 1, 4, 'r')
         self.r3 = GamePiece(3, 1, 1, 2, 3, 'r')
@@ -101,7 +104,7 @@ class GameBoard:
                 self.p2.name: self.p2, 
                 self.p3.name: self.p3, 
                 self.p4.name: self.p4, 
-                self.p5.name: self.p5, 
+                self.h1.name: self.h1, 
                 self.r1.name: self.r1, 
                 self.r2.name: self.r2, 
                 self.r3.name: self.r3, 
@@ -136,24 +139,81 @@ class GameBoard:
                 valid_moves[piece.name] = moves
         return valid_moves
 
-    def move(self, piece: "GamePiece", move: list[int]) -> None:
+    def move(self, piece_name: str, move: list[int]) -> None:
         """Carry out move for this piece on the current board."""
+        piece = self.pieces[piece_name]
         piece.move(move, self)
+        self.re_read_board()
+
+    def re_read_board(self) -> None:
+        """Reset the board attribute so matches the current piece state."""
         self.board = [[0] * self.width for i in range(self.length)]
         for piece in self.pieces.values():
             for space in piece.spaces_occupied:
                 self.board[space[1]][space[0]] = piece.name
 
+def deja_vu(
+        current_state: "GameBoard", 
+        # type is list of board states
+        reached_states: list[list[list[int | str]]]
+) -> bool:
+    """Check if state has been reached before.
+    
+    Notice that this includes swaps of pieces of same color."""
+    if current_state.board in reached_states:
+        return True
+    # First check if both empty squares are in the same spot.
+    possible_matches = []
+    cur_empties = []
+    for i, row in enumerate(current_state.board):
+        for j, entry in enumerate(row):
+            if entry == 0:
+                cur_empties.append([i, j])
+    for board in reached_states:
+        no_match = False
+        for i, row in enumerate(board.board):
+            for j, entry in enumerate(row):
+                if entry == 0:
+                    if [i, j] not in cur_empties:
+                        no_match = True
+            if no_match: continue
+        if not no_match:
+            possible_matches.append(board)
+    if not possible_matches:
+        return False
+    # So, now we have only boards with empty spaces in the same spot as current.
+    # Now, check if pieces the same color are swapped.
+    for board in possible_matches:
+        no_match = False
+        for hist_piece in board.pieces.values():
+            if hist_piece.color == 'g' or hist_piece.color == 'h': continue
+            match_found = False
+            for cur_piece in current_state.pieces.values():
+                if (hist_piece.color == cur_piece.color and 
+                        hist_piece.location == cur_piece.location):
+                    match_found = True
+                    break
+            if not match_found:
+                no_match = True
+                continue              
+        if not no_match:
+            return True
+    return False
+
+def explore(
+        current_state: "GameBoard",
+        move: (str, list[int]),
+        reached_states: list["GameBoard"], 
+        unexplored_moves: list[("GameBoard", (str, list[int]))],
+):
+    """"""
+
 def main():
+    reached_states = []
+    unexplored_moves = []
     gb = GameBoard()
-    # This isn't quite what I want because it applies the second move to the
-    #   board after the first move is finished, and I really want to branch
-    #   and have one board with the first move applied and another board with
-    #   with only the second move applied.
-    for piece_name in gb.valid_moves.keys():
-        for move in gb.valid_moves[piece_name]:
-            gb.move(gb.pieces[piece_name], move)
-            print(gb)
+    reached_states.append(eval(repr(gb)))
+    # TODO: I think I'm gonna need to append the move sequence that got to that state to the reached_states items.
 
 
 if __name__ == "__main__":
