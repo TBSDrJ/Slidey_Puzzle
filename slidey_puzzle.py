@@ -8,7 +8,7 @@ class GamePiece:
         # y-direction: The direction that starts with 5 spaces
         self.length = length
         # Upper-Left corner: x in 0 -> 3, y in 0 -> 4.
-        self.location = (x, y)
+        self.location = [x, y]
         # Color: 'r' = Red, 'p' = Purple, 'g' = Green
         self.color = color
 
@@ -69,6 +69,16 @@ class GamePiece:
                 valid.append(choice)
         return valid
 
+    def move(self, direction: list[int], gb: "GameBoard") -> None:
+        """Move this piece in given direction, with validity checking."""
+        print(self.location)
+        assert(direction in [[1,0], [0,1], [-1,0], [0,-1]])
+        self.location[0] += direction[0]
+        assert(self.location[0] in range(gb.width))
+        self.location[1] += direction[1]
+        assert(self.location[1] in range(gb.length))
+        print(self.location)
+
 class GameBoard:
     def __init__(self):
         self.width = 4
@@ -86,9 +96,19 @@ class GameBoard:
         self.r3 = GamePiece(3, 1, 1, 2, 3, 'r')
         self.r4 = GamePiece(4, 1, 1, 2, 4, 'r')
         self.g1 = GamePiece(1, 2, 2, 1, 0, 'g')
-        self.pieces = [self.p1, self.p2, self.p3, self.p4, self.p5, 
-                self.r1, self.r2, self.r3, self.r4, self.g1]
-        for piece in self.pieces:
+        self.pieces = {
+                self.p1.name: self.p1, 
+                self.p2.name: self.p2, 
+                self.p3.name: self.p3, 
+                self.p4.name: self.p4, 
+                self.p5.name: self.p5, 
+                self.r1.name: self.r1, 
+                self.r2.name: self.r2, 
+                self.r3.name: self.r3, 
+                self.r4.name: self.r4, 
+                self.g1.name: self.g1,
+        }
+        for piece in self.pieces.values():
             for space in piece.spaces_occupied:
                 self.board[space[1]][space[0]] = piece.name
 
@@ -110,15 +130,31 @@ class GameBoard:
     def valid_moves(self) -> dict:
         """Find all possible valid moves for the entire game board."""
         valid_moves = {}
-        for piece in self.pieces:
+        for piece in self.pieces.values():
             moves = piece.valid_moves(self)
             if moves:
                 valid_moves[piece.name] = moves
         return valid_moves
 
+    def move(self, piece: "GamePiece", move: list[int]) -> None:
+        """Carry out move for this piece on the current board."""
+        piece.move(move, self)
+        self.board = [[0] * self.width for i in range(self.length)]
+        for piece in self.pieces.values():
+            for space in piece.spaces_occupied:
+                self.board[space[1]][space[0]] = piece.name
+
 def main():
     gb = GameBoard()
-    print(gb.valid_moves)
+    # This isn't quite what I want because it applies the second move to the
+    #   board after the first move is finished, and I really want to branch
+    #   and have one board with the first move applied and another board with
+    #   with only the second move applied.
+    for piece_name in gb.valid_moves.keys():
+        for move in gb.valid_moves[piece_name]:
+            gb.move(gb.pieces[piece_name], move)
+            print(gb)
+
 
 if __name__ == "__main__":
     main()
