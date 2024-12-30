@@ -28,6 +28,10 @@ class GamePiece:
         return repr_str
 
     @property
+    def name(self) -> str:
+        return self.color + str(self.number)
+
+    @property
     def spaces_occupied(self):
         """Produce list of spaces covered by this piece."""
         spaces = []
@@ -39,10 +43,39 @@ class GamePiece:
                 tmp_spaces.append([space[0], space[1] + i])
         spaces += tmp_spaces
         return spaces
-    
+
+    def valid_moves(self, gb: "GameBoard") -> list[list[int]]:
+        """Produce list of valid moves for this piece.
+        
+        [1, 0] means can move this piece one square to the right.
+        [0, 1] means can move this piece one square down (towards exit)
+        [-1, 0] and [0, -1] are same but left/up."""
+        choices = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+        valid = []
+        for choice in choices:
+            is_valid = True
+            for space in self.spaces_occupied:
+                if space[0] + choice[0] >= gb.width:
+                    is_valid = False
+                    continue
+                if space[1] + choice[1] >= gb.length:
+                    is_valid = False
+                    continue
+                if (gb.board[space[1] + choice[1]][space[0] + choice[0]] != 0
+                        and (gb.board[space[1] + choice[1]][space[0] + 
+                        choice[0]] != self.name)):
+                    is_valid = False
+            if is_valid:
+                valid.append(choice)
+        return valid
+
 class GameBoard:
     def __init__(self):
-        self.board = [[0 for i in range(4)] for i in range(5)]
+        self.width = 4
+        self.length = 5
+        # Notice that we can't use e.g. [[0] * 4] * 5 because the * 5 produces
+        #   shallow copies, i.e. 5 pointers to one list of length 4.
+        self.board = [[0] * self.width for i in range(self.length)]
         self.p1 = GamePiece(1, 1, 2, 0, 1, 'p')
         self.p2 = GamePiece(2, 1, 2, 0, 3, 'p')
         self.p3 = GamePiece(3, 2, 1, 1, 2, 'p')
@@ -57,7 +90,7 @@ class GameBoard:
                 self.r1, self.r2, self.r3, self.r4, self.g1]
         for piece in self.pieces:
             for space in piece.spaces_occupied:
-                self.board[space[1]][space[0]] = piece.color + str(piece.number)
+                self.board[space[1]][space[0]] = piece.name
 
     def __str__(self) -> str:
         board_str = ""
@@ -73,8 +106,19 @@ class GameBoard:
     def __repr__(self) -> str:
         return "GameBoard()"
 
+    @property
+    def valid_moves(self) -> dict:
+        """Find all possible valid moves for the entire game board."""
+        valid_moves = {}
+        for piece in self.pieces:
+            moves = piece.valid_moves(self)
+            if moves:
+                valid_moves[piece.name] = moves
+        return valid_moves
+
 def main():
     gb = GameBoard()
+    print(gb.valid_moves)
 
 if __name__ == "__main__":
     main()
