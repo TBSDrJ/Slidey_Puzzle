@@ -1,5 +1,4 @@
-# Just for debugging
-total_moves = 0
+from dataclasses import dataclass
 
 class GamePiece:
     def __init__(self, number: int, width: int, length: int, 
@@ -76,11 +75,26 @@ class GamePiece:
 
     def move(self, direction: list[int], gb: "GameBoard") -> None:
         """Move this piece in given direction, with validity checking."""
-        assert(direction in [[1,0], [0,1], [-1,0], [0,-1]])
+        if (direction not in [[1,0], [0,1], [-1,0], [0,-1]]):
+            raise ValueError(f"direction given was {direction}." +
+                    "Direction must be in [[1,0], [0,1], [-1,0], [0,-1]]")
         self.location[0] += direction[0]
-        assert(self.location[0] in range(gb.width))
+        for space in self.spaces_occupied:
+            if space[0] not in range(gb.width):
+                raise ValueError(f"\nMoving piece {str(self)} in direction " +
+                        f"{direction} moves this piece past the edge.")
         self.location[1] += direction[1]
-        assert(self.location[1] in range(gb.length))
+        for space in self.spaces_occupied:
+            if space[1] not in range(gb.length):
+                raise ValueError(f"\nMoving piece {str(self)} in direction " +
+                        f"{direction} moves this piece past the edge.")
+        for self_space in self.spaces_occupied:
+            for piece in gb.pieces.values():
+                for other_space in piece.spaces_occupied:
+                    if piece != self and self_space == other_space:
+                        raise ValueError(f"\nMoving piece {str(self)} in " +
+                                f"direction {direction} moves this piece " + 
+                                f"onto piece {str(piece)}.")
 
 class GameBoard:
     def __init__(self):
@@ -152,6 +166,18 @@ class GameBoard:
             for space in piece.spaces_occupied:
                 self.board[space[1]][space[0]] = piece.name
 
+    def delete_piece(self, piece_name: str) -> None:
+        del self.pieces[piece_name]
+        exec(f"del self.{piece_name}")
+        self.re_read_board()
+
+@dataclass
+class Move:
+    """Just a struct to improve type annotations"""
+    piece: str
+    # Intended: from [1,0], [-1,0], [0,1], [0,-1].  See GamePiece.move()
+    direction: list[int]
+
 def deja_vu(
         current_state: "GameBoard", 
         # type is list of board states
@@ -160,7 +186,8 @@ def deja_vu(
     """Check if state has been reached before.
     
     Notice that this includes swaps of pieces of same color."""
-    if current_state.board in reached_states:
+    reached_states_boards = [r[0] for r in reached_states]
+    if current_state.board in reached_states_boards:
         return True
     # First check if both empty squares are in the same spot.
     possible_matches = []
@@ -169,7 +196,7 @@ def deja_vu(
         for j, entry in enumerate(row):
             if entry == 0:
                 cur_empties.append([i, j])
-    for board in reached_states:
+    for board in reached_states_boards:
         no_match = False
         for i, row in enumerate(board.board):
             for j, entry in enumerate(row):
@@ -202,18 +229,21 @@ def deja_vu(
 
 def explore(
         current_state: "GameBoard",
-        move: (str, list[int]),
-        reached_states: list["GameBoard"], 
-        unexplored_moves: list[("GameBoard", (str, list[int]))],
+        move: "Move",
+        reached_states: list[("GameBoard", list["Move"])], 
+        unexplored_moves: list[("GameBoard", "Move")],
 ):
     """"""
 
 def main():
+    total_moves = 0
     reached_states = []
     unexplored_moves = []
     gb = GameBoard()
-    reached_states.append(eval(repr(gb)))
-    # TODO: I think I'm gonna need to append the move sequence that got to that state to the reached_states items.
+    reached_states.append((eval(repr(gb)), []))
+    while total_moves < 5:
+        total_moves += 1
+
 
 
 if __name__ == "__main__":
