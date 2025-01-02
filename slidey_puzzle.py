@@ -172,6 +172,12 @@ class GameBoard:
         del self.pieces[piece_name]
         exec(f"del self.{piece_name}")
         self.re_read_board()
+    
+    @property
+    def win(self) -> bool:
+        if self.g1.location == [1, 3]:
+            return True
+        return False
 
 @dataclass
 class Move:
@@ -257,13 +263,13 @@ def main():
     branches_ended = 0
     reached_states = []
     unexplored_moves = []
-    gb = GameBoard()
-    state = State(deepcopy(gb), [])
+    board = GameBoard()
+    state = State(deepcopy(board), [])
     reached_states.append(state)
-    valid_moves = gb.valid_moves
+    valid_moves = board.valid_moves
     for move in valid_moves:
         unexplored_moves.append((state, move))
-    while total_moves < 1000:
+    while not board.win:
         total_moves += 1
         state, move = unexplored_moves.pop(0)
         board = deepcopy(state.board)
@@ -278,7 +284,8 @@ def main():
             branches_ended += 1
             # TODO: Compare move sequences, save shorter
         print(f"Moves: {total_moves} Reached: {len(reached_states)} Unex: {len(unexplored_moves)} Ends: {branches_ended}", end="\r")
-    print()
+    print(board)
+    print(new_moves)
 
 if __name__ == "__main__":
     main()
