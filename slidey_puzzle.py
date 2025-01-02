@@ -60,10 +60,10 @@ class GamePiece:
         for choice in choices:
             is_valid = True
             for space in self.spaces_occupied:
-                if space[0] + choice[0] >= gb.width:
+                if space[0] + choice[0] >= gb.width or space[0] + choice[0] < 0:
                     is_valid = False
                     continue
-                if space[1] + choice[1] >= gb.length:
+                if space[1] + choice[1] >= gb.length or space[1] + choice[1] < 0:
                     is_valid = False
                     continue
                 if (gb.board[space[1] + choice[1]][space[0] + choice[0]] != 0
@@ -183,6 +183,11 @@ class Move:
     def __str__(self) -> str:
         return self.piece + " " + str(self.direction)
 
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, Move):
+            return False
+        return self.piece == other.piece and self.direction == other.direction
+
 @dataclass
 class State:
     """Just a struct to represent a state of the puzzle and how we got there."""
@@ -199,7 +204,7 @@ class State:
         return ret_str
 
 def deja_vu(
-        current_state: "GameBoard", 
+        current_board: "GameBoard", 
         # type is list of board states
         reached_states: list["State"],
 ) -> bool:
@@ -207,12 +212,12 @@ def deja_vu(
     
     Notice that this includes swaps of pieces of same color."""
     reached_states_boards = [r.board for r in reached_states]
-    if current_state.board in reached_states_boards:
+    if current_board.board in reached_states_boards:
         return True
     # First check if both empty squares are in the same spot.
     possible_matches = []
     cur_empties = []
-    for i, row in enumerate(current_state.board):
+    for i, row in enumerate(current_board.board):
         for j, entry in enumerate(row):
             if entry == 0:
                 cur_empties.append([i, j])
@@ -235,7 +240,7 @@ def deja_vu(
         for hist_piece in board.pieces.values():
             if hist_piece.color == 'g' or hist_piece.color == 'h': continue
             match_found = False
-            for cur_piece in current_state.pieces.values():
+            for cur_piece in current_board.pieces.values():
                 if (hist_piece.color == cur_piece.color and 
                         hist_piece.location == cur_piece.location):
                     match_found = True
@@ -247,34 +252,33 @@ def deja_vu(
             return True
     return False
 
-def explore(
-        current_state: "GameBoard",
-        move: "Move",
-        reached_states: list["State"], 
-        unexplored_moves: list[("State", "Move")],
-):
-    """"""
-
 def main():
     total_moves = 0
+    branches_ended = 0
     reached_states = []
     unexplored_moves = []
     gb = GameBoard()
     state = State(deepcopy(gb), [])
     reached_states.append(state)
     valid_moves = gb.valid_moves
-    print(valid_moves)
-    # move = Move("p1", [0, -1])
-    # gb.move(move)
-    # new_moves = state.moves + [move]
-    # new_state = State(deepcopy(gb), new_moves)
-    # reached_states.append(new_state)
-    # for state in reached_states:
-    #     print(state)
-    while total_moves < 5:
+    for move in valid_moves:
+        unexplored_moves.append((state, move))
+    while total_moves < 1000:
         total_moves += 1
-
-
+        state, move = unexplored_moves.pop(0)
+        board = deepcopy(state.board)
+        board.move(move)
+        if not deja_vu(board, reached_states):
+            new_moves = state.moves + [move]
+            new_state = State(deepcopy(board), new_moves)
+            reached_states.append(new_state)
+            for move in board.valid_moves:
+                unexplored_moves.append((new_state, move))
+        else:
+            branches_ended += 1
+            # TODO: Compare move sequences, save shorter
+        print(f"Moves: {total_moves} Reached: {len(reached_states)} Unex: {len(unexplored_moves)} Ends: {branches_ended}", end="\r")
+    print()
 
 if __name__ == "__main__":
     main()

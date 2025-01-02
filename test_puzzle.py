@@ -104,28 +104,15 @@ class TestBoard(unittest.TestCase):
         # This also tests some valid moves for GameBoard.move()
         self.board = slidey_puzzle.GameBoard()
         self.assertEqual(2, len(self.board.valid_moves))
-        for move in self.board.valid_moves:
-            if move.piece == "p1":
-                self.assertEqual(move.direction, [0, -1])
-            elif move.piece == "p3":
-                self.assertEqual(move.direction, [0, -1])
-            else:
-                self.assertTrue(False, f"Invalid piece {move.piece} in "+ 
-                        f"board.valid_moves: {move}")
+        self.assertIn(slidey_puzzle.Move("p1", [0, -1]), self.board.valid_moves)
+        self.assertIn(slidey_puzzle.Move("p3", [0, -1]), self.board.valid_moves)
         self.board.move(slidey_puzzle.Move("p1", [0, -1]))
         self.board.move(slidey_puzzle.Move("h1", [-1, 0]))
         valid_moves = self.board.valid_moves
         self.assertEqual(3, len(valid_moves))
-        for move in self.board.valid_moves:
-            if move.piece == "r3":
-                self.assertEqual(move.direction, [0, -1])
-            elif move.piece == "h1":
-                self.assertEqual(move.direction, [1, 0])
-            elif move.piece == "p3":
-                self.assertEqual(move.direction, [0, -1])
-            else:
-                self.assertTrue(False, f"Invalid piece {move.piece} in "+ 
-                        f"board.valid_moves: {move}")
+        self.assertIn(slidey_puzzle.Move("r3", [0, -1]), self.board.valid_moves)
+        self.assertIn(slidey_puzzle.Move("h1", [1, 0]), self.board.valid_moves)
+        self.assertIn(slidey_puzzle.Move("p3", [0, -1]), self.board.valid_moves)
 
     def test_move(self):
         # Only testing invalud moves here because we've already tested valid
@@ -164,3 +151,16 @@ class TestBoard(unittest.TestCase):
         self.board = slidey_puzzle.GameBoard()
         with self.assertRaises(ValueError):
             self.board.move(slidey_puzzle.Move("r1", [0, 1]))
+
+class TestDejaVu(unittest.TestCase):
+    def test_deja_vu(self):
+        from copy import deepcopy
+        board = slidey_puzzle.GameBoard()
+        state_0 = slidey_puzzle.State(deepcopy(board), [])
+        move_0 = slidey_puzzle.Move("p1", [0, -1])
+        board.move(move_0)
+        self.assertFalse(slidey_puzzle.deja_vu(board, [state_0]))
+        state_1 = slidey_puzzle.State(deepcopy(board), move_0)
+        move_1 = slidey_puzzle.Move("p1", [0, 1])
+        board.move(move_1)
+        self.assertTrue(slidey_puzzle.deja_vu(board, [state_0, state_1]))
