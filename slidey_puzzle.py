@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from copy import deepcopy
 
 class GamePiece:
     def __init__(self, number: int, width: int, length: int, 
@@ -144,19 +145,20 @@ class GameBoard:
         return "GameBoard()"
 
     @property
-    def valid_moves(self) -> dict:
+    def valid_moves(self) -> list["Move"]:
         """Find all possible valid moves for the entire game board."""
-        valid_moves = {}
+        valid_moves = []
         for piece in self.pieces.values():
             moves = piece.valid_moves(self)
             if moves:
-                valid_moves[piece.name] = moves
+                for move in moves:
+                    valid_moves.append(Move(piece.name, move))
         return valid_moves
 
-    def move(self, piece_name: str, move: list[int]) -> None:
+    def move(self, move: "Move") -> None:
         """Carry out move for this piece on the current board."""
-        piece = self.pieces[piece_name]
-        piece.move(move, self)
+        piece = self.pieces[move.piece]
+        piece.move(move.direction, self)
         self.re_read_board()
 
     def re_read_board(self) -> None:
@@ -173,20 +175,38 @@ class GameBoard:
 
 @dataclass
 class Move:
-    """Just a struct to improve type annotations"""
+    """Just a struct to represent a move"""
     piece: str
     # Intended: from [1,0], [-1,0], [0,1], [0,-1].  See GamePiece.move()
     direction: list[int]
 
+    def __str__(self) -> str:
+        return self.piece + " " + str(self.direction)
+
+@dataclass
+class State:
+    """Just a struct to represent a state of the puzzle and how we got there."""
+    board: list[list[int | str]]
+    moves: list["Move"]
+
+    def __str__(self) -> str:
+        ret_str = str(self.board) + "["
+        for move in self.moves: 
+            ret_str += str(move) + ", "
+        if self.moves:
+            ret_str = ret_str[:-2]
+        ret_str += "]\n"
+        return ret_str
+
 def deja_vu(
         current_state: "GameBoard", 
         # type is list of board states
-        reached_states: list[list[list[int | str]]]
+        reached_states: list["State"],
 ) -> bool:
     """Check if state has been reached before.
     
     Notice that this includes swaps of pieces of same color."""
-    reached_states_boards = [r[0] for r in reached_states]
+    reached_states_boards = [r.board for r in reached_states]
     if current_state.board in reached_states_boards:
         return True
     # First check if both empty squares are in the same spot.
@@ -230,8 +250,8 @@ def deja_vu(
 def explore(
         current_state: "GameBoard",
         move: "Move",
-        reached_states: list[("GameBoard", list["Move"])], 
-        unexplored_moves: list[("GameBoard", "Move")],
+        reached_states: list["State"], 
+        unexplored_moves: list[("State", "Move")],
 ):
     """"""
 
@@ -240,7 +260,17 @@ def main():
     reached_states = []
     unexplored_moves = []
     gb = GameBoard()
-    reached_states.append((eval(repr(gb)), []))
+    state = State(deepcopy(gb), [])
+    reached_states.append(state)
+    valid_moves = gb.valid_moves
+    print(valid_moves)
+    # move = Move("p1", [0, -1])
+    # gb.move(move)
+    # new_moves = state.moves + [move]
+    # new_state = State(deepcopy(gb), new_moves)
+    # reached_states.append(new_state)
+    # for state in reached_states:
+    #     print(state)
     while total_moves < 5:
         total_moves += 1
 

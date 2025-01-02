@@ -72,7 +72,7 @@ class TestGamePiece(unittest.TestCase):
         self.assertIn([-1,0], self.board.h1.valid_moves(self.board))
         self.assertEqual(1, len(self.board.p2.valid_moves(self.board)))
         self.assertIn([0,-1], self.board.p2.valid_moves(self.board))
-        self.board.move('p2', [0,-1])
+        self.board.move(slidey_puzzle.Move("p2", [0,-1]))
         self.assertEqual(1, len(self.board.g1.valid_moves(self.board)))
         self.assertIn([-1,0], self.board.g1.valid_moves(self.board))
         self.assertEqual(2, len(self.board.p2.valid_moves(self.board)))
@@ -103,56 +103,64 @@ class TestBoard(unittest.TestCase):
     def test_valid_moves(self):
         # This also tests some valid moves for GameBoard.move()
         self.board = slidey_puzzle.GameBoard()
-        self.assertEqual(2, len(self.board.valid_moves.items()))
-        self.assertIn("p1", self.board.valid_moves.keys())
-        self.assertIn("p3", self.board.valid_moves.keys())
-        self.assertEqual([[0,-1]], list(self.board.valid_moves.values())[0])
-        self.assertEqual([[0,-1]], list(self.board.valid_moves.values())[1])
-        self.board.move("p1", [0, -1])
-        self.board.move("h1", [-1, 0])
+        self.assertEqual(2, len(self.board.valid_moves))
+        for move in self.board.valid_moves:
+            if move.piece == "p1":
+                self.assertEqual(move.direction, [0, -1])
+            elif move.piece == "p3":
+                self.assertEqual(move.direction, [0, -1])
+            else:
+                self.assertTrue(False, f"Invalid piece {move.piece} in "+ 
+                        f"board.valid_moves: {move}")
+        self.board.move(slidey_puzzle.Move("p1", [0, -1]))
+        self.board.move(slidey_puzzle.Move("h1", [-1, 0]))
         valid_moves = self.board.valid_moves
-        self.assertEqual(3, len(valid_moves.items()))
-        self.assertIn("r3", valid_moves.keys())
-        self.assertIn("h1", valid_moves.keys())
-        self.assertIn("p3", valid_moves.keys())
-        self.assertEqual([[0, -1]], valid_moves["r3"])
-        self.assertEqual([[1, 0]], valid_moves["h1"])
-        self.assertEqual([[0, -1]], valid_moves["p3"])
+        self.assertEqual(3, len(valid_moves))
+        for move in self.board.valid_moves:
+            if move.piece == "r3":
+                self.assertEqual(move.direction, [0, -1])
+            elif move.piece == "h1":
+                self.assertEqual(move.direction, [1, 0])
+            elif move.piece == "p3":
+                self.assertEqual(move.direction, [0, -1])
+            else:
+                self.assertTrue(False, f"Invalid piece {move.piece} in "+ 
+                        f"board.valid_moves: {move}")
 
     def test_move(self):
         # Only testing invalud moves here because we've already tested valid
         self.board = slidey_puzzle.GameBoard()
         # Move off edges
         with self.assertRaises(ValueError):
-            self.board.move("p1", [-1, 0])
+            self.board.move(slidey_puzzle.Move("p1", [-1, 0]))
         self.board = slidey_puzzle.GameBoard()
         with self.assertRaises(ValueError):
-            self.board.move("g1", [0, -1])
+            self.board.move(slidey_puzzle.Move("g1", [0, -1]))
         self.board = slidey_puzzle.GameBoard()
         with self.assertRaises(ValueError):
-            self.board.move("p4", [1, 0])
+            self.board.move(slidey_puzzle.Move("p4", [1, 0]))
         self.board = slidey_puzzle.GameBoard()
         with self.assertRaises(ValueError):
-            self.board.move("p4", [0, 1])
+            self.board.move(slidey_puzzle.Move("p4", [0, 1]))
         # Move onto other pieces
         self.board = slidey_puzzle.GameBoard()
         with self.assertRaises(ValueError):
-            self.board.move("g1", [-1, 0])
+            self.board.move(slidey_puzzle.Move("g1", [-1, 0]))
         self.board = slidey_puzzle.GameBoard()
         with self.assertRaises(ValueError):
-            self.board.move("g1", [1, 0])
+            self.board.move(slidey_puzzle.Move("g1", [1, 0]))
         self.board = slidey_puzzle.GameBoard()
         with self.assertRaises(ValueError):
-            self.board.move("g1", [0, 1])
+            self.board.move(slidey_puzzle.Move("g1", [0, 1]))
         self.board = slidey_puzzle.GameBoard()
         with self.assertRaises(ValueError):
-            self.board.move("r1", [-1, 0])
+            self.board.move(slidey_puzzle.Move("r1", [-1, 0]))
         self.board = slidey_puzzle.GameBoard()
         with self.assertRaises(ValueError):
-            self.board.move("r1", [1, 0])
+            self.board.move(slidey_puzzle.Move("r1", [1, 0]))
         self.board = slidey_puzzle.GameBoard()
         with self.assertRaises(ValueError):
-            self.board.move("r1", [0, -1])
+            self.board.move(slidey_puzzle.Move("r1", [0, -1]))
         self.board = slidey_puzzle.GameBoard()
         with self.assertRaises(ValueError):
-            self.board.move("r1", [0, 1])
+            self.board.move(slidey_puzzle.Move("r1", [0, 1]))
