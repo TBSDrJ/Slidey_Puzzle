@@ -8,6 +8,6 @@ The engine is quite general for the most part.  If anyone wants to use this to f
 
 For this puzzle, I found 474 distinct solutions, the shortest of which involves 114 moves.  Here, "distinct" means that, in any solution, the puzzle is never in the same position as it is in any of the other solutions.  Here, "same" considers two positions the same if the only difference is that two (or more) pieces of the same size & orientation are swapped.  According to the Wikipedia page, Martin Gardner has published a solution with 81 moves from a slightly different starting position (6 moves different), so my solution must be imperfect somewhere.
 
-There 80,271 moves carried out in total, of which 55,484 moves ended in a position that was the same as one that had been seen before (including winning positions), and 24,787 moves ended in a new position that had not been seen before.
+There 80,271 moves carried out in total, of which 55,484 moves ended in a position that was the same as one that had been seen before (including winning positions), and 24,787 moves ended in a new position that had not been seen before.  On my MacBook Pro with an M1 Max processor, this program took 1330.36 seconds (22 minutes, 10.36 secs) to go through all of these possibilities, with peak RAM usage of 190 MB.
 
 The file [wins.txt](wins.txt) includes all 474 different sequences of moves that result in a solution.  The file [first_win.txt](first_win.txt) shows the board after each of the 114 moves in the first solution found.
