@@ -213,10 +213,11 @@ def deja_vu(
         current_board: "GameBoard", 
         # type is list of board states
         reached_states: list["State"],
-) -> bool:
+) -> int:
     """Check if state has been reached before.
     
-    Notice that this includes swaps of pieces of same color."""
+    Notice that this includes swaps of pieces of same color.
+    Return value of -1 means no match.  Otherwise, returns index of match."""
     reached_states_boards = [r.board for r in reached_states]
     if current_board.board in reached_states_boards:
         return True
@@ -227,7 +228,7 @@ def deja_vu(
         for j, entry in enumerate(row):
             if entry == 0:
                 cur_empties.append([i, j])
-    for board in reached_states_boards:
+    for k, board in enumerate(reached_states_boards):
         no_match = False
         for i, row in enumerate(board.board):
             for j, entry in enumerate(row):
@@ -236,12 +237,12 @@ def deja_vu(
                         no_match = True
             if no_match: continue
         if not no_match:
-            possible_matches.append(board)
+            possible_matches.append((k, board))
     if not possible_matches:
-        return False
+        return -1
     # So, now we have only boards with empty spaces in the same spot as current.
     # Now, check if pieces the same color are swapped.
-    for board in possible_matches:
+    for i, board in possible_matches:
         no_match = False
         for hist_piece in board.pieces.values():
             if hist_piece.color == 'g' or hist_piece.color == 'h': continue
@@ -255,12 +256,13 @@ def deja_vu(
                 no_match = True
                 continue              
         if not no_match:
-            return True
-    return False
+            return i
+    return -1
 
 def main():
     total_moves = 0
     branches_ended = 0
+    wins = 0
     reached_states = []
     unexplored_moves = []
     board = GameBoard()
@@ -269,23 +271,272 @@ def main():
     valid_moves = board.valid_moves
     for move in valid_moves:
         unexplored_moves.append((state, move))
-    while not board.win:
+    while len(unexplored_moves) > 0:
         total_moves += 1
         state, move = unexplored_moves.pop(0)
         board = deepcopy(state.board)
         board.move(move)
-        if not deja_vu(board, reached_states):
-            new_moves = state.moves + [move]
+        new_moves = state.moves + [move]
+        deja = deja_vu(board, reached_states)
+        if deja < 0:
             new_state = State(deepcopy(board), new_moves)
             reached_states.append(new_state)
             for move in board.valid_moves:
                 unexplored_moves.append((new_state, move))
         else:
             branches_ended += 1
-            # TODO: Compare move sequences, save shorter
-        print(f"Moves: {total_moves} Reached: {len(reached_states)} Unex: {len(unexplored_moves)} Ends: {branches_ended}", end="\r")
+            if len(new_moves) < len(reached_states[deja].moves):
+                print(reached_states[deja])
+                reached_states[deja].moves = new_moves
+                print(reached_states[deja])
+                quit()
+        print(f"Moves: {total_moves} Reached: {len(reached_states)} Unex: {len(unexplored_moves)} Ends: {branches_ended}  ", end="\r")
+        if board.win:
+            wins += 1
+            print("\n", "Length of winning sequence: ", len(new_moves))
+            with open('wins.txt', 'a') as f:
+                print(board.board, file=f)
+                print("", file=f)
+                move_count = 0
+                for move in new_moves:
+                    print(move, end="   ", file=f)
+                    move_count += 1
+                    if move_count % 8 == 0:
+                        print("", file=f)
+                print("\n", file=f)
+    print(f"\nTotal of {wins} solutions.")
+
+def main_2():
+    board = GameBoard()
     print(board)
-    print(new_moves)
+    board.move(Move("p1", [0, -1]))
+    print(board)
+    board.move(Move("p3", [0, -1]))
+    print(board)
+    board.move(Move("h1", [1, 0]))
+    print(board)
+    board.move(Move("r1", [0, -1]))
+    print(board)
+    board.move(Move("r1", [-1, 0]))
+    print(board)
+    board.move(Move("h1", [-1, 0]))
+    print(board)
+    board.move(Move("p4", [0, -1]))
+    print(board)
+    board.move(Move("r4", [1, 0]))
+    print(board)
+    board.move(Move("r2", [1, 0]))
+    print(board)
+    board.move(Move("p2", [1, 0]))
+    print(board)
+    board.move(Move("r1", [0, 1]))
+    print(board)
+    board.move(Move("h1", [-1, 0]))
+    print(board)
+    board.move(Move("r1", [0, 1]))
+    print(board)
+    board.move(Move("r3", [0, -1]))
+    print(board)
+    board.move(Move("r2", [0, -1]))
+    print(board)
+    board.move(Move("r4", [-1, 0]))
+    print(board)
+    board.move(Move("p4", [0, 1]))
+    print(board)
+    board.move(Move("r3", [1, 0]))
+    print(board)
+    board.move(Move("h1", [1, 0]))
+    print(board)
+    board.move(Move("p1", [0, 1]))
+    print(board)
+    board.move(Move("p1", [0, 1]))
+    print(board)
+    board.move(Move("g1", [-1, 0]))
+    print(board)
+    board.move(Move("p3", [-1, 0]))
+    print(board)
+    board.move(Move("r3", [0, -1]))
+    print(board)
+    board.move(Move("p4", [0, -1]))
+    print(board)
+    board.move(Move("r3", [0, -1]))
+    print(board)
+    board.move(Move("p4", [0, -1]))
+    print(board)
+    board.move(Move("r2", [1, 0]))
+    print(board)
+    board.move(Move("r4", [1, 0]))
+    print(board)
+    board.move(Move("p2", [1, 0]))
+    print(board)
+    board.move(Move("r1", [1, 0]))
+    print(board)
+    board.move(Move("p1", [0, 1]))
+    print(board)
+    board.move(Move("h1", [-1, 0]))
+    print(board)
+    board.move(Move("p2", [0, -1]))
+    print(board)
+    board.move(Move("r1", [0, -1]))
+    print(board)
+    board.move(Move("r4", [-1, 0]))
+    print(board)
+    board.move(Move("r4", [-1, 0]))
+    print(board)
+    board.move(Move("p2", [0, 1]))
+    print(board)
+    board.move(Move("p3", [0, 1]))
+    print(board)
+    board.move(Move("r3", [-1, 0]))
+    print(board)
+    board.move(Move("p4", [0, -1]))
+    print(board)
+    board.move(Move("r2", [0, -1]))
+    print(board)
+    board.move(Move("p2", [1, 0]))
+    print(board)
+    board.move(Move("p3", [0, 1]))
+    print(board)
+    board.move(Move("p3", [0, 1]))
+    print(board)
+    board.move(Move("r2", [-1, 0]))
+    print(board)
+    board.move(Move("r2", [0, -1]))
+    print(board)
+    board.move(Move("h1", [1, 0]))
+    print(board)
+    board.move(Move("p1", [0, -1]))
+    print(board)
+    board.move(Move("h1", [1, 0]))
+    print(board)
+    board.move(Move("r4", [-1, 0]))
+    print(board)
+    board.move(Move("r1", [0, 1]))
+    print(board)
+    board.move(Move("p1", [1, 0]))
+    print(board)
+    board.move(Move("r4", [0, -1]))
+    print(board)
+    board.move(Move("r1", [-1, 0]))
+    print(board)
+    board.move(Move("p1", [0, 1]))
+    print(board)
+    board.move(Move("h1", [-1, 0]))
+    print(board)
+    board.move(Move("p4", [0, 1]))
+    print(board)
+    board.move(Move("h1", [-1, 0]))
+    print(board)
+    board.move(Move("p3", [0, -1]))
+    print(board)
+    board.move(Move("r3", [1, 0]))
+    print(board)
+    board.move(Move("r2", [0, -1]))
+    print(board)
+    board.move(Move("p3", [0, -1]))
+    print(board)
+    board.move(Move("p1", [1, 0]))
+    print(board)
+    board.move(Move("r1", [1, 0]))
+    print(board)
+    board.move(Move("r4", [0, 1]))
+    print(board)
+    board.move(Move("h1", [0, 1]))
+    print(board)
+    board.move(Move("g1", [0, 1]))
+    print(board)
+    board.move(Move("r2", [-1, 0]))
+    print(board)
+    board.move(Move("r2", [-1, 0]))
+    print(board)
+    board.move(Move("r3", [-1, 0]))
+    print(board)
+    board.move(Move("p4", [0, -1]))
+    print(board)
+    board.move(Move("p2", [0, -1]))
+    print(board)
+    board.move(Move("r3", [-1, 0]))
+    print(board)
+    board.move(Move("p3", [0, -1]))
+    print(board)
+    board.move(Move("p1", [0, -1]))
+    print(board)
+    board.move(Move("r1", [1, 0]))
+    print(board)
+    board.move(Move("r1", [1, 0]))
+    print(board)
+    board.move(Move("r4", [1, 0]))
+    print(board)
+    board.move(Move("r4", [1, 0]))
+    print(board)
+    board.move(Move("h1", [0, 1]))
+    print(board)
+    board.move(Move("g1", [0, 1]))
+    print(board)
+    board.move(Move("r2", [0, 1]))
+    print(board)
+    board.move(Move("r3", [-1, 0]))
+    print(board)
+    board.move(Move("p3", [-1, 0]))
+    print(board)
+    board.move(Move("p1", [0, -1]))
+    print(board)
+    board.move(Move("p1", [0, -1]))
+    print(board)
+    board.move(Move("g1", [1, 0]))
+    print(board)
+    board.move(Move("r2", [0, 1]))
+    print(board)
+    board.move(Move("r2", [0, 1]))
+    print(board)
+    board.move(Move("r3", [0, 1]))
+    print(board)
+    board.move(Move("r3", [0, 1]))
+    print(board)
+    board.move(Move("p3", [-1, 0]))
+    print(board)
+    board.move(Move("p1", [-1, 0]))
+    print(board)
+    board.move(Move("p4", [-1, 0]))
+    print(board)
+    board.move(Move("p2", [0, -1]))
+    print(board)
+    board.move(Move("p2", [0, -1]))
+    print(board)
+    board.move(Move("g1", [1, 0]))
+    print(board)
+    board.move(Move("r2", [1, 0]))
+    print(board)
+    board.move(Move("r2", [0, -1]))
+    print(board)
+    board.move(Move("h1", [0, -1]))
+    print(board)
+    board.move(Move("r4", [-1, 0]))
+    print(board)
+    board.move(Move("r1", [-1, 0]))
+    print(board)
+    board.move(Move("r4", [-1, 0]))
+    print(board)
+    board.move(Move("r1", [-1, 0]))
+    print(board)
+    board.move(Move("g1", [0, 1]))
+    print(board)
+    board.move(Move("r2", [1, 0]))
+    print(board)
+    board.move(Move("r2", [1, 0]))
+    print(board)
+    board.move(Move("r3", [1, 0]))
+    print(board)
+    board.move(Move("r3", [1, 0]))
+    print(board)
+    board.move(Move("h1", [0, -1]))
+    print(board)
+    board.move(Move("r1", [0, -1]))
+    print(board)
+    board.move(Move("r1", [-1, 0]))
+    print(board)
+    board.move(Move("g1", [-1, 0]))
+    print(board)
 
 if __name__ == "__main__":
-    main()
+    main_2()
