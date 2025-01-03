@@ -2,7 +2,7 @@
 
 So, we 3D printed this slidey puzzle and, a month or two later, no one had solved it.  So, we wantd to know if it was actually possible to solve it.  So, I wrote a computer program to decide.
 
-This puzzle is equivalent to the [https://en.wikipedia.org/wiki/Klotski](Klotski Puzzle), which I didn't realize until after I had done all the programming.  So, probably someone has solved this before.
+This puzzle is equivalent to the [Klotski Puzzle]([Klotski Puzzle](https://en.wikipedia.org/wiki/Klotski)), which I didn't realize until after I had done all the programming.  So, probably someone has solved this before.
 
 The engine is quite general for the most part.  If anyone wants to use this to find solutions to other similar puzzles with a different size or collection of pieces, you should be able to. I probably could have done a slightly better job of isolating the stuff that is specific to this puzzle, but it should be easy to tease out.  This is true in both the main code and the unit tests if you want to use the unit tests.  In the unit tests, I was pretty careful to comment the parts that assume the specifics of the setup, as far as I saw.  But I haven't tried with a different setup.
 
