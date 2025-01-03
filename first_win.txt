@@ -1,0 +1,690 @@
+xx g1 g1 xx 
+p1 g1 g1 p3 
+p1 h1 h1 p3 
+p2 r1 r3 p4 
+p2 r2 r4 p4 
+
+p1 g1 g1 xx 
+p1 g1 g1 p3 
+xx h1 h1 p3 
+p2 r1 r3 p4 
+p2 r2 r4 p4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+xx h1 h1 xx 
+p2 r1 r3 p4 
+p2 r2 r4 p4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+xx xx h1 h1 
+p2 r1 r3 p4 
+p2 r2 r4 p4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+xx r1 h1 h1 
+p2 xx r3 p4 
+p2 r2 r4 p4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+r1 xx h1 h1 
+p2 xx r3 p4 
+p2 r2 r4 p4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+r1 h1 h1 xx 
+p2 xx r3 p4 
+p2 r2 r4 p4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+r1 h1 h1 p4 
+p2 xx r3 p4 
+p2 r2 r4 xx 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+r1 h1 h1 p4 
+p2 xx r3 p4 
+p2 r2 xx r4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+r1 h1 h1 p4 
+p2 xx r3 p4 
+p2 xx r2 r4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+r1 h1 h1 p4 
+xx p2 r3 p4 
+xx p2 r2 r4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+xx h1 h1 p4 
+r1 p2 r3 p4 
+xx p2 r2 r4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+h1 h1 xx p4 
+r1 p2 r3 p4 
+xx p2 r2 r4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+h1 h1 xx p4 
+xx p2 r3 p4 
+r1 p2 r2 r4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+h1 h1 r3 p4 
+xx p2 xx p4 
+r1 p2 r2 r4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+h1 h1 r3 p4 
+xx p2 r2 p4 
+r1 p2 xx r4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+h1 h1 r3 p4 
+xx p2 r2 p4 
+r1 p2 r4 xx 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+h1 h1 r3 xx 
+xx p2 r2 p4 
+r1 p2 r4 p4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+h1 h1 xx r3 
+xx p2 r2 p4 
+r1 p2 r4 p4 
+
+p1 g1 g1 p3 
+p1 g1 g1 p3 
+xx h1 h1 r3 
+xx p2 r2 p4 
+r1 p2 r4 p4 
+
+xx g1 g1 p3 
+p1 g1 g1 p3 
+p1 h1 h1 r3 
+xx p2 r2 p4 
+r1 p2 r4 p4 
+
+xx g1 g1 p3 
+xx g1 g1 p3 
+p1 h1 h1 r3 
+p1 p2 r2 p4 
+r1 p2 r4 p4 
+
+g1 g1 xx p3 
+g1 g1 xx p3 
+p1 h1 h1 r3 
+p1 p2 r2 p4 
+r1 p2 r4 p4 
+
+g1 g1 p3 xx 
+g1 g1 p3 xx 
+p1 h1 h1 r3 
+p1 p2 r2 p4 
+r1 p2 r4 p4 
+
+g1 g1 p3 xx 
+g1 g1 p3 r3 
+p1 h1 h1 xx 
+p1 p2 r2 p4 
+r1 p2 r4 p4 
+
+g1 g1 p3 xx 
+g1 g1 p3 r3 
+p1 h1 h1 p4 
+p1 p2 r2 p4 
+r1 p2 r4 xx 
+
+g1 g1 p3 r3 
+g1 g1 p3 xx 
+p1 h1 h1 p4 
+p1 p2 r2 p4 
+r1 p2 r4 xx 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+p1 h1 h1 p4 
+p1 p2 r2 xx 
+r1 p2 r4 xx 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+p1 h1 h1 p4 
+p1 p2 xx r2 
+r1 p2 r4 xx 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+p1 h1 h1 p4 
+p1 p2 xx r2 
+r1 p2 xx r4 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+p1 h1 h1 p4 
+p1 xx p2 r2 
+r1 xx p2 r4 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+p1 h1 h1 p4 
+p1 xx p2 r2 
+xx r1 p2 r4 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+xx h1 h1 p4 
+p1 xx p2 r2 
+p1 r1 p2 r4 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+h1 h1 xx p4 
+p1 xx p2 r2 
+p1 r1 p2 r4 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+h1 h1 p2 p4 
+p1 xx p2 r2 
+p1 r1 xx r4 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+h1 h1 p2 p4 
+p1 r1 p2 r2 
+p1 xx xx r4 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+h1 h1 p2 p4 
+p1 r1 p2 r2 
+p1 xx r4 xx 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+h1 h1 p2 p4 
+p1 r1 p2 r2 
+p1 r4 xx xx 
+
+g1 g1 p3 r3 
+g1 g1 p3 p4 
+h1 h1 xx p4 
+p1 r1 p2 r2 
+p1 r4 p2 xx 
+
+g1 g1 xx r3 
+g1 g1 p3 p4 
+h1 h1 p3 p4 
+p1 r1 p2 r2 
+p1 r4 p2 xx 
+
+g1 g1 r3 xx 
+g1 g1 p3 p4 
+h1 h1 p3 p4 
+p1 r1 p2 r2 
+p1 r4 p2 xx 
+
+g1 g1 r3 p4 
+g1 g1 p3 p4 
+h1 h1 p3 xx 
+p1 r1 p2 r2 
+p1 r4 p2 xx 
+
+g1 g1 r3 p4 
+g1 g1 p3 p4 
+h1 h1 p3 r2 
+p1 r1 p2 xx 
+p1 r4 p2 xx 
+
+g1 g1 r3 p4 
+g1 g1 p3 p4 
+h1 h1 p3 r2 
+p1 r1 xx p2 
+p1 r4 xx p2 
+
+g1 g1 r3 p4 
+g1 g1 xx p4 
+h1 h1 p3 r2 
+p1 r1 p3 p2 
+p1 r4 xx p2 
+
+g1 g1 r3 p4 
+g1 g1 xx p4 
+h1 h1 xx r2 
+p1 r1 p3 p2 
+p1 r4 p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 xx p4 
+h1 h1 r2 xx 
+p1 r1 p3 p2 
+p1 r4 p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 r2 p4 
+h1 h1 xx xx 
+p1 r1 p3 p2 
+p1 r4 p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 r2 p4 
+xx h1 h1 xx 
+p1 r1 p3 p2 
+p1 r4 p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 r2 p4 
+p1 h1 h1 xx 
+p1 r1 p3 p2 
+xx r4 p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 r2 p4 
+p1 xx h1 h1 
+p1 r1 p3 p2 
+xx r4 p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 r2 p4 
+p1 xx h1 h1 
+p1 r1 p3 p2 
+r4 xx p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 r2 p4 
+p1 xx h1 h1 
+p1 xx p3 p2 
+r4 r1 p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 r2 p4 
+xx p1 h1 h1 
+xx p1 p3 p2 
+r4 r1 p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 r2 p4 
+xx p1 h1 h1 
+r4 p1 p3 p2 
+xx r1 p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 r2 p4 
+xx p1 h1 h1 
+r4 p1 p3 p2 
+r1 xx p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 r2 p4 
+xx xx h1 h1 
+r4 p1 p3 p2 
+r1 p1 p3 p2 
+
+g1 g1 r3 p4 
+g1 g1 r2 p4 
+xx h1 h1 xx 
+r4 p1 p3 p2 
+r1 p1 p3 p2 
+
+g1 g1 r3 xx 
+g1 g1 r2 p4 
+xx h1 h1 p4 
+r4 p1 p3 p2 
+r1 p1 p3 p2 
+
+g1 g1 r3 xx 
+g1 g1 r2 p4 
+h1 h1 xx p4 
+r4 p1 p3 p2 
+r1 p1 p3 p2 
+
+g1 g1 r3 xx 
+g1 g1 r2 p4 
+h1 h1 p3 p4 
+r4 p1 p3 p2 
+r1 p1 xx p2 
+
+g1 g1 xx r3 
+g1 g1 r2 p4 
+h1 h1 p3 p4 
+r4 p1 p3 p2 
+r1 p1 xx p2 
+
+g1 g1 r2 r3 
+g1 g1 xx p4 
+h1 h1 p3 p4 
+r4 p1 p3 p2 
+r1 p1 xx p2 
+
+g1 g1 r2 r3 
+g1 g1 p3 p4 
+h1 h1 p3 p4 
+r4 p1 xx p2 
+r1 p1 xx p2 
+
+g1 g1 r2 r3 
+g1 g1 p3 p4 
+h1 h1 p3 p4 
+r4 xx p1 p2 
+r1 xx p1 p2 
+
+g1 g1 r2 r3 
+g1 g1 p3 p4 
+h1 h1 p3 p4 
+r4 xx p1 p2 
+xx r1 p1 p2 
+
+g1 g1 r2 r3 
+g1 g1 p3 p4 
+h1 h1 p3 p4 
+xx xx p1 p2 
+r4 r1 p1 p2 
+
+g1 g1 r2 r3 
+g1 g1 p3 p4 
+xx xx p3 p4 
+h1 h1 p1 p2 
+r4 r1 p1 p2 
+
+xx xx r2 r3 
+g1 g1 p3 p4 
+g1 g1 p3 p4 
+h1 h1 p1 p2 
+r4 r1 p1 p2 
+
+xx r2 xx r3 
+g1 g1 p3 p4 
+g1 g1 p3 p4 
+h1 h1 p1 p2 
+r4 r1 p1 p2 
+
+r2 xx xx r3 
+g1 g1 p3 p4 
+g1 g1 p3 p4 
+h1 h1 p1 p2 
+r4 r1 p1 p2 
+
+r2 xx r3 xx 
+g1 g1 p3 p4 
+g1 g1 p3 p4 
+h1 h1 p1 p2 
+r4 r1 p1 p2 
+
+r2 xx r3 p4 
+g1 g1 p3 p4 
+g1 g1 p3 xx 
+h1 h1 p1 p2 
+r4 r1 p1 p2 
+
+r2 xx r3 p4 
+g1 g1 p3 p4 
+g1 g1 p3 p2 
+h1 h1 p1 p2 
+r4 r1 p1 xx 
+
+r2 r3 xx p4 
+g1 g1 p3 p4 
+g1 g1 p3 p2 
+h1 h1 p1 p2 
+r4 r1 p1 xx 
+
+r2 r3 p3 p4 
+g1 g1 p3 p4 
+g1 g1 xx p2 
+h1 h1 p1 p2 
+r4 r1 p1 xx 
+
+r2 r3 p3 p4 
+g1 g1 p3 p4 
+g1 g1 p1 p2 
+h1 h1 p1 p2 
+r4 r1 xx xx 
+
+r2 r3 p3 p4 
+g1 g1 p3 p4 
+g1 g1 p1 p2 
+h1 h1 p1 p2 
+r4 xx r1 xx 
+
+r2 r3 p3 p4 
+g1 g1 p3 p4 
+g1 g1 p1 p2 
+h1 h1 p1 p2 
+r4 xx xx r1 
+
+r2 r3 p3 p4 
+g1 g1 p3 p4 
+g1 g1 p1 p2 
+h1 h1 p1 p2 
+xx r4 xx r1 
+
+r2 r3 p3 p4 
+g1 g1 p3 p4 
+g1 g1 p1 p2 
+h1 h1 p1 p2 
+xx xx r4 r1 
+
+r2 r3 p3 p4 
+g1 g1 p3 p4 
+g1 g1 p1 p2 
+xx xx p1 p2 
+h1 h1 r4 r1 
+
+r2 r3 p3 p4 
+xx xx p3 p4 
+g1 g1 p1 p2 
+g1 g1 p1 p2 
+h1 h1 r4 r1 
+
+xx r3 p3 p4 
+r2 xx p3 p4 
+g1 g1 p1 p2 
+g1 g1 p1 p2 
+h1 h1 r4 r1 
+
+r3 xx p3 p4 
+r2 xx p3 p4 
+g1 g1 p1 p2 
+g1 g1 p1 p2 
+h1 h1 r4 r1 
+
+r3 p3 xx p4 
+r2 p3 xx p4 
+g1 g1 p1 p2 
+g1 g1 p1 p2 
+h1 h1 r4 r1 
+
+r3 p3 xx p4 
+r2 p3 p1 p4 
+g1 g1 p1 p2 
+g1 g1 xx p2 
+h1 h1 r4 r1 
+
+r3 p3 p1 p4 
+r2 p3 p1 p4 
+g1 g1 xx p2 
+g1 g1 xx p2 
+h1 h1 r4 r1 
+
+r3 p3 p1 p4 
+r2 p3 p1 p4 
+xx g1 g1 p2 
+xx g1 g1 p2 
+h1 h1 r4 r1 
+
+r3 p3 p1 p4 
+xx p3 p1 p4 
+r2 g1 g1 p2 
+xx g1 g1 p2 
+h1 h1 r4 r1 
+
+r3 p3 p1 p4 
+xx p3 p1 p4 
+xx g1 g1 p2 
+r2 g1 g1 p2 
+h1 h1 r4 r1 
+
+xx p3 p1 p4 
+r3 p3 p1 p4 
+xx g1 g1 p2 
+r2 g1 g1 p2 
+h1 h1 r4 r1 
+
+xx p3 p1 p4 
+xx p3 p1 p4 
+r3 g1 g1 p2 
+r2 g1 g1 p2 
+h1 h1 r4 r1 
+
+p3 xx p1 p4 
+p3 xx p1 p4 
+r3 g1 g1 p2 
+r2 g1 g1 p2 
+h1 h1 r4 r1 
+
+p3 p1 xx p4 
+p3 p1 xx p4 
+r3 g1 g1 p2 
+r2 g1 g1 p2 
+h1 h1 r4 r1 
+
+p3 p1 p4 xx 
+p3 p1 p4 xx 
+r3 g1 g1 p2 
+r2 g1 g1 p2 
+h1 h1 r4 r1 
+
+p3 p1 p4 xx 
+p3 p1 p4 p2 
+r3 g1 g1 p2 
+r2 g1 g1 xx 
+h1 h1 r4 r1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 g1 g1 xx 
+r2 g1 g1 xx 
+h1 h1 r4 r1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 xx g1 g1 
+r2 xx g1 g1 
+h1 h1 r4 r1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 xx g1 g1 
+xx r2 g1 g1 
+h1 h1 r4 r1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 r2 g1 g1 
+xx xx g1 g1 
+h1 h1 r4 r1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 r2 g1 g1 
+h1 h1 g1 g1 
+xx xx r4 r1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 r2 g1 g1 
+h1 h1 g1 g1 
+xx r4 xx r1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 r2 g1 g1 
+h1 h1 g1 g1 
+xx r4 r1 xx 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 r2 g1 g1 
+h1 h1 g1 g1 
+r4 xx r1 xx 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 r2 g1 g1 
+h1 h1 g1 g1 
+r4 r1 xx xx 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 r2 xx xx 
+h1 h1 g1 g1 
+r4 r1 g1 g1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 xx r2 xx 
+h1 h1 g1 g1 
+r4 r1 g1 g1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+r3 xx xx r2 
+h1 h1 g1 g1 
+r4 r1 g1 g1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+xx r3 xx r2 
+h1 h1 g1 g1 
+r4 r1 g1 g1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+xx xx r3 r2 
+h1 h1 g1 g1 
+r4 r1 g1 g1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+h1 h1 r3 r2 
+xx xx g1 g1 
+r4 r1 g1 g1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+h1 h1 r3 r2 
+xx r1 g1 g1 
+r4 xx g1 g1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+h1 h1 r3 r2 
+r1 xx g1 g1 
+r4 xx g1 g1 
+
+p3 p1 p4 p2 
+p3 p1 p4 p2 
+h1 h1 r3 r2 
+r1 g1 g1 xx 
+r4 g1 g1 xx 
+
